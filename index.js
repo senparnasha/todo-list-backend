@@ -1,9 +1,12 @@
 const express = require("express");
+
 const dbConnect = require("./mongodb");
-const app = express();
+const cors = require('cors')
 const mongodb = require("mongodb");
 const uuid=require("uuid");
 
+const app = express();
+app.use(cors({ origin: 'http://localhost:3001' }));
 // //for getting data from postman
 app.use(express.json());
 
@@ -43,7 +46,7 @@ app.put("/updatetask", async (req, res) => {
   res.send(result);
 });
 
-app.delete("/deletetask", async (req, res) => {
+app.post("/deletetask", async (req, res) => {
 console.log(req.body.task_id)
   let data = await dbConnect();
   let result = await data.deleteOne({
